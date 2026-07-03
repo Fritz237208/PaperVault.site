@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ExamWise — Dashboard</title>
+<title>PaperVault — Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <!-- PDF.js — used for the secure in-browser viewer (no download exposed) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module" id="pdfJsScript"></script>
@@ -3869,7 +3869,7 @@ async function renderUniCards(){
         <span>Level ${pq.level} · ${pq.semester} · ${pq.department} · ${pq.pages} pages</span>
       </div>
       <div class="pq-footer">
-        <button class="btn-view" onclick="viewPaper(${pq.id},'university')">
+        <button class="btn-view" onclick='viewPaper(${JSON.stringify(pq.id)},"university")'>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           View
         </button>
@@ -3908,7 +3908,7 @@ async function renderConcourCards(){
         <span>${pq.department} · ${pq.pages} pages</span>
       </div>
       <div class="pq-footer">
-        <button class="btn-view" onclick="viewPaper(${pq.id},'concour')">
+        <button class="btn-view" onclick='viewPaper(${JSON.stringify(pq.id)},"concour")'>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           View
         </button>
