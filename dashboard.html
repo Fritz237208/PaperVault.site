@@ -1533,29 +1533,18 @@
   .txn-status-icon.failed{background: rgba(200,25,90,0.12); color:#c8195a;}
   .txn-body{flex:1; min-width:0;}
   .txn-date{font-size:11px; color:var(--gray-500); font-weight:600; margin-bottom:6px;}
-  .txn-title{font-size:14.5px; font-weight:700; color:var(--ink); line-height:1.45; margin-bottom:6px;}
+  .txn-title{
+    font-size:14.5px; font-weight:700; color:var(--ink); line-height:1.45; margin-bottom:6px;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+  }
   .txn-title .txn-sub{color:var(--sky-dark); font-weight:700;}
   .txn-status-text{font-size:12.5px; font-weight:700;}
   .txn-status-text.successful{color:#178a5f;}
   .txn-status-text.pending{color:var(--gold-dark);}
   .txn-status-text.failed{color:#c8195a;}
-  .txn-right{
-    display:flex; flex-direction:column; align-items:flex-end;
-    gap:10px; flex-shrink:0; margin-left:auto; padding-left:10px;
-  }
-  .txn-amount{font-size:17px; font-weight:800; color:var(--ink); white-space:nowrap;}
-  .status-pill{
-    display:inline-flex; align-items:center; gap:5px;
-    padding:4px 13px;
-    border-radius:999px;
-    font-size:10.5px;
-    font-weight:800;
-    color:#fff;
-    letter-spacing:.02em;
-  }
-  .status-pill.successful{background: linear-gradient(135deg,#21b07d,#178a5f);}
-  .status-pill.pending{background: linear-gradient(135deg, var(--gold), var(--gold-dark));}
-  .status-pill.failed{background: linear-gradient(135deg,#ef2b6f,#c8195a);}
 
   .txn-empty-mini{text-align:center; padding:54px 16px;}
   .txn-empty-mini .mini-ico{
@@ -1848,16 +1837,6 @@
     .subscribe-banner-text h2{font-size:16.5px;}
     .txn-card{padding:24px 18px;}
     .txn-heading{font-size:16px;}
-    .txn-item{position:relative; padding-right:96px;}
-    .txn-right{
-      position:absolute;
-      top:16px; right:16px;
-      margin-left:0; padding-left:0;
-      align-items:flex-end;
-      gap:8px;
-    }
-    .txn-amount{font-size:14px;}
-    .status-pill{padding:3px 10px; font-size:9.5px;}
     .semester-pill{font-size:11px; padding:12px 0;}
   }
 
@@ -5125,10 +5104,6 @@ async function renderTransactions(typeFilter = activeTxnFilter()){
         <div class="txn-date">${t.date}</div>
         <div class="txn-title">${t.title} <span class="txn-sub">${t.sub || ''}</span></div>
         <div class="txn-status-text ${t.status}">${TXN_STATUS_TEXT[t.status] || ''}</div>
-      </div>
-      <div class="txn-right">
-        ${t.amount != null ? `<div class="txn-amount">${Number(t.amount).toLocaleString()} FCFA</div>` : ''}
-        <span class="status-pill ${t.status}">${t.status.charAt(0).toUpperCase() + t.status.slice(1)}</span>
       </div>
     </div>
   `).join('');
