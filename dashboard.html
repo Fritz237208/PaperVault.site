@@ -1045,7 +1045,7 @@
   }
   .profile-grid > *{min-width:0;}
 
-  .profile-card, .info-card, .history-card{
+  .profile-card, .info-card{
     background:var(--white);
     border-radius:var(--radius);
     border:1px solid var(--gray-100);
@@ -1053,7 +1053,7 @@
     padding:28px;
     transition: box-shadow .3s var(--ease), transform .3s var(--ease);
   }
-  .profile-card:hover, .info-card:hover, .history-card:hover{
+  .profile-card:hover, .info-card:hover{
     box-shadow: var(--shadow-md);
   }
 
@@ -1146,6 +1146,81 @@
     font-size:11.5px;
   }
   .info-value{font-weight:800; font-size:14px; color:var(--ink); word-break:break-word;}
+
+  /* ---- Account Information card (label/value list style) ---- */
+  .account-card{padding:32px 28px;}
+  .account-heading{
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+    color:var(--gray-500);
+    margin-bottom:6px;
+  }
+  .account-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:16px 0;
+    border-bottom:1px solid var(--gray-100);
+  }
+  .account-row:last-of-type{border-bottom:none; padding-bottom:2px;}
+  .account-label{font-size:13.5px; font-weight:500; color:var(--gray-500); flex-shrink:0;}
+  .account-value{
+    font-size:14.5px; font-weight:800; color:var(--ink);
+    flex:1; min-width:0; text-align:right;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+
+  /* ---- Need Help banner (below Security section) ---- */
+  .help-banner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:24px;
+    padding:20px 24px;
+    border-radius:var(--radius);
+    background:var(--gray-bg);
+    border:1px solid var(--gray-100);
+  }
+  .help-banner-left{display:flex; align-items:center; gap:16px; min-width:0;}
+  .help-banner-ico{
+    width:44px; height:44px;
+    border-radius:12px;
+    flex-shrink:0;
+    background:rgba(41,82,227,0.12);
+    color:var(--sky-dark);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .help-banner-ico svg{width:22px; height:22px;}
+  .help-banner-title{font-size:14.5px; font-weight:800; color:var(--ink); margin-bottom:3px;}
+  .help-banner-sub{font-size:12px; font-weight:500; color:var(--gray-500);}
+  .help-banner-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 20px;
+    border-radius:12px;
+    background:var(--sky);
+    color:#fff;
+    font-weight:700; font-size:13px;
+    white-space:nowrap;
+    flex-shrink:0;
+    box-shadow: 0 8px 20px rgba(41,82,227,0.25);
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
+  }
+  .help-banner-btn:hover{
+    background:var(--sky-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(41,82,227,0.32);
+  }
+  .help-banner-btn svg{width:15px; height:15px; transition: transform .2s var(--ease);}
+  .help-banner-btn:hover svg{transform: translateX(2px);}
+  @media (max-width: 480px){
+    .help-banner{padding:18px;}
+    .help-banner-btn{width:100%; justify-content:center;}
+  }
 
   .btn-secondary{
     margin-top:20px;
@@ -1246,67 +1321,6 @@
   .btn-gradient:hover{transform: translateY(-1px); box-shadow: 0 14px 28px rgba(124,58,237,0.34);}
   .btn-gradient:disabled{opacity:.7; cursor:not-allowed; transform:none;}
 
-  .history-card{margin-top:24px;}
-  #historyList{
-    max-height:420px;
-    overflow-y:auto;
-    padding-right:4px;
-    scrollbar-width:thin;
-  }
-  #historyList::-webkit-scrollbar{width:6px;}
-  #historyList::-webkit-scrollbar-thumb{background:var(--gray-300); border-radius:999px;}
-  #historyList::-webkit-scrollbar-track{background:transparent;}
-  .history-item{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:14px;
-    padding:14px 16px;
-    border-radius:14px;
-    background:var(--gray-bg);
-    margin-bottom:10px;
-    transition: background .2s var(--ease);
-  }
-  .history-item:last-child{margin-bottom:0;}
-  .history-item:hover{background:var(--gray-100);}
-  .history-left{display:flex; align-items:center; gap:14px; min-width:0;}
-  .history-icon{
-    width:40px; height:40px;
-    border-radius:11px;
-    background: rgba(41,82,227,0.12);
-    color:var(--sky-dark);
-    display:flex; align-items:center; justify-content:center;
-    flex-shrink:0;
-  }
-  .history-icon svg{width:18px; height:18px;}
-  .history-title{font-size:12.5px; font-weight:700; color:var(--ink); word-break:break-word;}
-  .history-date{font-size:11px; color:var(--gray-500); font-weight:500; margin-top:3px;}
-  .history-price{font-size:13px; font-weight:800; color:var(--sky-dark); flex-shrink:0; text-align:right;}
-
-  /* ---- loading skeleton (while fetching from the DB) ---- */
-  @keyframes skPulse{0%,100%{opacity:.55;} 50%{opacity:1;}}
-  .history-skeleton{
-    display:flex; align-items:center; gap:14px;
-    padding:14px 16px;
-    border-radius:14px;
-    background:var(--gray-bg);
-    margin-bottom:10px;
-  }
-  .history-skeleton:last-child{margin-bottom:0;}
-  .history-skeleton .sk-icon{
-    width:40px; height:40px; border-radius:11px; flex-shrink:0;
-    background:var(--gray-100);
-    animation: skPulse 1.3s ease-in-out infinite;
-  }
-  .history-skeleton .sk-lines{flex:1; min-width:0; display:flex; flex-direction:column; gap:8px;}
-  .history-skeleton .sk-line{
-    height:10px; border-radius:6px;
-    background:var(--gray-100);
-    animation: skPulse 1.3s ease-in-out infinite;
-  }
-  .history-skeleton .sk-line.w-70{width:70%;}
-  .history-skeleton .sk-line.w-40{width:40%;}
-
   /* ---- error state (failed fetch) ---- */
   .txn-empty-mini .mini-ico.error{
     background: linear-gradient(135deg, rgba(239,43,111,0.14), rgba(200,25,90,0.18));
@@ -1390,11 +1404,11 @@
   .txn-heading{
     font-size:19px;
     font-weight:800;
-    text-align:center;
-    margin-bottom:22px;
+    text-align:left;
+    margin-bottom:20px;
     display:flex;
     align-items:center;
-    justify-content:center;
+    justify-content:flex-start;
     flex-wrap:wrap;
     gap:8px 10px;
   }
@@ -1407,24 +1421,82 @@
     padding:3px 12px;
     border-radius:999px;
   }
-  .txn-tabs{
+
+  /* ---- toolbar: free-floating tabs + plain filter icon ---- */
+  .txn-toolbar{
     display:flex;
-    gap:4px;
-    border-bottom:1.5px solid var(--gray-100);
+    align-items:center;
+    gap:6px;
     margin-bottom:22px;
-    overflow-x:auto;
+  }
+  .txn-tabs{
+    flex:1;
+    min-width:0;
+    display:flex;
+    align-items:center;
+    gap:2px;
   }
   .txn-tab{
-    padding:12px 16px;
-    font-size:12px;
+    flex:1;
+    min-width:0;
+    padding:9px 8px;
+    border-radius:999px;
+    font-size:11px;
     font-weight:700;
     color:var(--gray-500);
-    border-bottom:2.5px solid transparent;
+    background:transparent;
     white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    text-align:center;
     transition: all .2s var(--ease);
   }
   .txn-tab:hover{color:var(--sky-dark);}
-  .txn-tab.active{color:var(--sky-dark); border-bottom-color:var(--sky);}
+  .txn-tab.active{background:rgba(41,82,227,0.1); color:var(--sky-dark);}
+
+  .txn-filter-dd{position:relative; flex-shrink:0;}
+  .txn-filter-btn{
+    width:30px; height:30px;
+    border-radius:8px;
+    background:transparent;
+    border:none;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gray-500);
+    transition: all .2s var(--ease);
+  }
+  .txn-filter-btn svg{width:15px; height:15px;}
+  .txn-filter-btn:hover{color:var(--sky-dark); background:var(--gray-bg);}
+  .txn-filter-btn.has-value{color:var(--sky-dark); background:rgba(41,82,227,0.1);}
+  .txn-filter-dd.open .txn-filter-btn{color:var(--sky-dark); background:rgba(41,82,227,0.1);}
+  .txn-filter-panel{
+    position:absolute;
+    top:calc(100% + 10px);
+    right:0;
+    width:160px;
+    background:var(--white);
+    border:1px solid var(--gray-100);
+    border-radius:14px;
+    box-shadow: var(--shadow-md);
+    z-index:500;
+    opacity:0; visibility:hidden;
+    transform: translateY(-8px) scale(.98);
+    transition: all .22s var(--ease);
+    padding:6px;
+  }
+  .txn-filter-dd.open .txn-filter-panel{opacity:1; visibility:visible; transform: translateY(0) scale(1);}
+  .txn-filter-option{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 12px;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:600;
+    color:var(--gray-700);
+    transition: background .15s var(--ease), color .15s var(--ease);
+  }
+  .txn-filter-option:hover{background:var(--gray-bg); color:var(--sky-dark);}
+  .txn-filter-option.selected{color:var(--sky-dark); font-weight:800; background:rgba(41,82,227,0.07);}
+  .txn-filter-option .opt-check{width:14px; height:14px; opacity:0; flex-shrink:0;}
+  .txn-filter-option.selected .opt-check{opacity:1;}
 
   .txn-list{
     display:flex;
@@ -1442,29 +1514,36 @@
     display:flex;
     align-items:flex-start;
     gap:14px;
-    padding:16px;
+    padding:18px;
     border:1px solid var(--gray-100);
-    border-radius:14px;
+    border-radius:16px;
     transition: box-shadow .2s var(--ease), border-color .2s var(--ease);
     animation: fadeUp .4s var(--ease) both;
   }
   .txn-item:hover{box-shadow: var(--shadow-sm); border-color:var(--gray-300);}
-  .txn-icon{
-    width:42px; height:42px;
-    border-radius:11px;
-    background: rgba(41,82,227,0.1);
-    color:var(--sky-dark);
+  .txn-status-icon{
+    width:44px; height:44px;
+    border-radius:12px;
     display:flex; align-items:center; justify-content:center;
-    font-size:16px;
-    font-weight:800;
     flex-shrink:0;
   }
-  .txn-icon.withdrawal{background: rgba(201,150,26,0.14); color:var(--gold-dark);}
+  .txn-status-icon svg{width:20px; height:20px;}
+  .txn-status-icon.successful{background: rgba(23,138,95,0.12); color:#178a5f;}
+  .txn-status-icon.pending{background: rgba(201,150,26,0.14); color:var(--gold-dark);}
+  .txn-status-icon.failed{background: rgba(200,25,90,0.12); color:#c8195a;}
   .txn-body{flex:1; min-width:0;}
-  .txn-date{font-size:11px; color:var(--gray-500); font-weight:600; margin-bottom:4px;}
-  .txn-title{font-size:13px; font-weight:700; color:var(--ink); line-height:1.4; margin-bottom:9px;}
-  .txn-title .txn-sub{color:var(--gray-500); font-weight:600;}
-  .txn-status-row{display:flex; align-items:center; gap:8px; font-size:11.5px; color:var(--gray-500); font-weight:600;}
+  .txn-date{font-size:11px; color:var(--gray-500); font-weight:600; margin-bottom:6px;}
+  .txn-title{font-size:14.5px; font-weight:700; color:var(--ink); line-height:1.45; margin-bottom:6px;}
+  .txn-title .txn-sub{color:var(--sky-dark); font-weight:700;}
+  .txn-status-text{font-size:12.5px; font-weight:700;}
+  .txn-status-text.successful{color:#178a5f;}
+  .txn-status-text.pending{color:var(--gold-dark);}
+  .txn-status-text.failed{color:#c8195a;}
+  .txn-right{
+    display:flex; flex-direction:column; align-items:flex-end;
+    gap:10px; flex-shrink:0; margin-left:auto; padding-left:10px;
+  }
+  .txn-amount{font-size:17px; font-weight:800; color:var(--ink); white-space:nowrap;}
   .status-pill{
     display:inline-flex; align-items:center; gap:5px;
     padding:4px 13px;
@@ -1769,6 +1848,8 @@
     .subscribe-banner-text h2{font-size:16.5px;}
     .txn-card{padding:24px 18px;}
     .txn-heading{font-size:16px;}
+    .txn-item{flex-wrap:wrap;}
+    .txn-right{margin-left:58px; padding-left:0; align-items:flex-start;}
     .semester-pill{font-size:11px; padding:12px 0;}
   }
 
@@ -2651,10 +2732,36 @@
 
         <div class="txn-card">
           <h2 class="txn-heading">Transaction History <span class="txn-count-badge"><span id="txnCount">00</span></span></h2>
-          <div class="txn-tabs">
-            <button type="button" class="txn-tab active" data-tab="all">All Transactions</button>
-            <button type="button" class="txn-tab" data-tab="subscription">Subscription Fees</button>
-            <button type="button" class="txn-tab" data-tab="withdrawal">Withdrawal Requests</button>
+          <div class="txn-toolbar">
+            <div class="txn-tabs">
+              <button type="button" class="txn-tab active" data-tab="all">All Transactions</button>
+              <button type="button" class="txn-tab" data-tab="subscription">Subscriptions</button>
+              <button type="button" class="txn-tab" data-tab="withdrawal">Withdrawals</button>
+            </div>
+
+            <div class="txn-filter-dd" id="txnFilterDd">
+              <button type="button" class="txn-filter-btn" id="txnFilterBtn" aria-label="Filter by status" aria-haspopup="true" aria-expanded="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+              </button>
+              <div class="txn-filter-panel" id="txnFilterPanel" role="menu">
+                <div class="txn-filter-option selected" data-status="all" role="menuitem">
+                  <span class="opt-label">All</span>
+                  <svg class="opt-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="txn-filter-option" data-status="successful" role="menuitem">
+                  <span class="opt-label">Successful</span>
+                  <svg class="opt-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="txn-filter-option" data-status="pending" role="menuitem">
+                  <span class="opt-label">Pending</span>
+                  <svg class="opt-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="txn-filter-option" data-status="failed" role="menuitem">
+                  <span class="opt-label">Failed</span>
+                  <svg class="opt-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="txn-list" id="txnList"></div>
           <div class="txn-empty-mini" id="txnEmpty" style="display:none;">
@@ -2669,7 +2776,6 @@
       <section class="page" id="page-profile">
         <div class="page-header">
           <h1 class="page-title"> My Profile</h1>
-          <p class="page-subtitle">Manage your personal information and view your purchase history.</p>
         </div>
 
         <div class="profile-grid">
@@ -2681,36 +2787,27 @@
           </div>
 
           <div>
-            <div class="info-card">
-              <h3 class="card-heading">Account Information</h3>
-              <div class="info-row">
-                <span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-                <div class="info-text">
-                  <span class="info-label">Full Name</span>
-                  <span class="info-value" id="infoFullName"></span>
-                </div>
+            <div class="info-card account-card">
+              <h3 class="account-heading">Account</h3>
+              <div class="account-row">
+                <span class="account-label">Full name</span>
+                <span class="account-value" id="infoFullName"></span>
               </div>
-              <div class="info-row">
-                <span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
-                <div class="info-text">
-                  <span class="info-label">Email</span>
-                  <span class="info-value" id="infoEmail"></span>
-                </div>
+              <div class="account-row">
+                <span class="account-label">Email</span>
+                <span class="account-value" id="infoEmail"></span>
               </div>
-              <div class="info-row">
-                <span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg></span>
-                <div class="info-text">
-                  <span class="info-label">Phone</span>
-                  <span class="info-value" id="infoPhone"></span>
-                </div>
+              <div class="account-row">
+                <span class="account-label">Phone</span>
+                <span class="account-value" id="infoPhone"></span>
               </div>
-
-              <div class="info-row">
-                <span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></svg></span>
-                <div class="info-text">
-                  <span class="info-label">Member Since</span>
-                  <span class="info-value" id="infoJoined"></span>
-                </div>
+              <div class="account-row">
+                <span class="account-label">Referral code</span>
+                <span class="account-value" id="infoReferralCode"></span>
+              </div>
+              <div class="account-row">
+                <span class="account-label">Member since</span>
+                <span class="account-value" id="infoJoined"></span>
               </div>
             </div>
 
@@ -2736,12 +2833,23 @@
                 <button class="btn-gradient" id="updatePasswordBtn" type="button">Update Password</button>
               </div>
             </div>
-
-            <div class="history-card">
-              <h3 class="card-heading"> Purchase History</h3>
-              <div id="historyList"></div>
-            </div>
           </div>  
+        </div>
+
+        <div class="help-banner">
+          <div class="help-banner-left">
+            <div class="help-banner-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            </div>
+            <div>
+              <div class="help-banner-title">Need help?</div>
+              <div class="help-banner-sub">Our support team is here for you.</div>
+            </div>
+          </div>
+          <a href="https://wa.me/237696114590" target="_blank" rel="noopener noreferrer" class="help-banner-btn">
+            Contact Support
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
         </div>
       </section>
 
@@ -3340,15 +3448,12 @@ var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
    URL directly) is bounced straight back to the auth page.
    ============================================================ */
 const AUTH_URL = 'authentication.html';
-// TEMP: auth guard disabled for local preview — re-enable before pushing to GitHub
-/*
 (async function requireAuth(){
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) {
     window.location.href = AUTH_URL;
   }
 })();
-*/
 
 /* ============================================================
    DATABASE SCHEMA REFERENCE
@@ -3953,9 +4058,6 @@ function showPage(page){
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.querySelector(`.nav-item[data-page="${page}"]`)?.classList.add('active');
   closeSidebar();
-  // Re-fetch purchase history every time the profile page is opened
-  // Live: this triggers a fresh Supabase query, not a cache read
-  if(page === 'profile') renderHistory();
   // Re-fetch on every visit so newly purchased/expired papers stay accurate
   if(page === 'my-papers') renderMyPapers();
 }
@@ -4908,64 +5010,6 @@ document.addEventListener('keydown', e => {
 });
 
 /* ============================================================
-   PURCHASE HISTORY
-   ============================================================ */
-function historySkeletonHTML(count = 3){
-  return Array.from({ length: count }).map(() => `
-    <div class="history-skeleton">
-      <div class="sk-icon"></div>
-      <div class="sk-lines">
-        <div class="sk-line w-70"></div>
-        <div class="sk-line w-40"></div>
-      </div>
-    </div>
-  `).join('');
-}
-
-async function renderHistory(){
-  const list = document.getElementById('historyList');
-  // Loading skeleton — sized like the real rows so nothing jumps once data lands
-  list.innerHTML = historySkeletonHTML();
-
-  let history;
-  try{
-    history = await db.getPurchaseHistory();
-  } catch(err){
-    list.innerHTML = `
-      <div class="txn-empty-mini">
-        <div class="mini-ico error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-        <div class="title">Couldn't load purchase history</div>
-        <p class="sub">Check your connection and try again.</p>
-        <button class="btn-pill" style="margin:14px auto 0;" onclick="renderHistory()">Retry</button>
-      </div>`;
-    return;
-  }
-
-  if(!history || history.length === 0){
-    list.innerHTML = `
-      <div class="txn-empty-mini">
-        <div class="mini-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="13" y2="16"/></svg></div>
-        <div class="title">No Purchases Yet</div>
-        <p class="sub">Past questions and subscriptions you buy will show up here.</p>
-      </div>`;
-    return;
-  }
-
-  list.innerHTML = history.map(h => `
-    <div class="history-item">
-      <div class="history-left">
-        <div class="history-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="13" y2="16"/></svg></div>
-        <div>
-          <div class="history-title">${h.title}</div>
-          <div class="history-date">${h.date}</div>
-        </div>
-      </div>
-      <div class="history-price">${h.amount ? h.amount.toLocaleString() + ' FCFA' : '—'}</div>
-    </div>
-  `).join('');
-}
-
-/* ============================================================
    PROFILE
    ============================================================ */
 async function renderProfile(){
@@ -4976,11 +5020,9 @@ async function renderProfile(){
   document.getElementById('infoFullName').textContent = profile.fullName;
   document.getElementById('infoEmail').textContent = profile.email;
   document.getElementById('infoPhone').textContent = profile.phone;
+  document.getElementById('infoReferralCode').textContent = profile.referralCode || '—';
   document.getElementById('infoJoined').textContent = profile.joined;
   document.getElementById('topAvatar').textContent = profile.initials;
-  // Always re-fetch purchase history when profile loads
-  // Live: this hits the DB fresh each time, not the in-memory array
-  await renderHistory();
 }
 
 document.getElementById('signOutBtn').addEventListener('click', async (e) => {
@@ -5027,11 +5069,20 @@ const paymentState = { type: null, school: null, department: null, level: null, 
 /* ============================================================
    PAYMENTS — TRANSACTION HISTORY RENDER
    ============================================================ */
+let activeTxnStatus = 'all';
+
 function activeTxnFilter(){
   return document.querySelector('.txn-tab.active')?.dataset.tab || 'all';
 }
 
-async function renderTransactions(filter = activeTxnFilter()){
+const TXN_STATUS_ICONS = {
+  successful: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  pending:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>',
+  failed:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+};
+const TXN_STATUS_TEXT = { successful: 'Completed', pending: 'Pending confirmation', failed: 'Payment failed' };
+
+async function renderTransactions(typeFilter = activeTxnFilter()){
   const list = document.getElementById('txnList');
   const emptyEl = document.getElementById('txnEmpty');
   const countEl = document.getElementById('txnCount');
@@ -5039,7 +5090,10 @@ async function renderTransactions(filter = activeTxnFilter()){
   const txns = await db.getTransactions();
   countEl.textContent = String(txns.length).padStart(2, '0');
 
-  const filtered = filter === 'all' ? txns : txns.filter(t => t.type === filter);
+  const filtered = txns.filter(t =>
+    (typeFilter === 'all' || t.type === typeFilter) &&
+    (activeTxnStatus === 'all' || t.status === activeTxnStatus)
+  );
 
   if(filtered.length === 0){
     list.style.display = 'none';
@@ -5051,13 +5105,15 @@ async function renderTransactions(filter = activeTxnFilter()){
 
   list.innerHTML = filtered.map((t, i) => `
     <div class="txn-item" style="animation-delay:${i * 0.04}s">
-      <div class="txn-icon ${t.type === 'withdrawal' ? 'withdrawal' : ''}">${t.type === 'withdrawal' ? '↓' : '↑'}</div>
+      <div class="txn-status-icon ${t.status}">${TXN_STATUS_ICONS[t.status] || TXN_STATUS_ICONS.pending}</div>
       <div class="txn-body">
         <div class="txn-date">${t.date}</div>
         <div class="txn-title">${t.title} <span class="txn-sub">${t.sub || ''}</span></div>
-        <div class="txn-status-row">
-          Status: <span class="status-pill ${t.status}">${t.status.charAt(0).toUpperCase() + t.status.slice(1)}</span>
-        </div>
+        <div class="txn-status-text ${t.status}">${TXN_STATUS_TEXT[t.status] || ''}</div>
+      </div>
+      <div class="txn-right">
+        ${t.amount != null ? `<div class="txn-amount">${Number(t.amount).toLocaleString()} FCFA</div>` : ''}
+        <span class="status-pill ${t.status}">${t.status.charAt(0).toUpperCase() + t.status.slice(1)}</span>
       </div>
     </div>
   `).join('');
@@ -5070,6 +5126,39 @@ document.querySelectorAll('.txn-tab').forEach(tab => {
     renderTransactions(tab.dataset.tab);
   });
 });
+
+/* ---- status filter dropdown (All / Successful / Pending / Failed) ---- */
+(function initTxnStatusFilter(){
+  const dd = document.getElementById('txnFilterDd');
+  const btn = document.getElementById('txnFilterBtn');
+  if(!dd || !btn) return;
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const isOpen = dd.classList.contains('open');
+    dd.classList.toggle('open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  dd.querySelectorAll('.txn-filter-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      activeTxnStatus = opt.dataset.status;
+      dd.querySelectorAll('.txn-filter-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      btn.classList.toggle('has-value', activeTxnStatus !== 'all');
+      dd.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      renderTransactions();
+    });
+  });
+
+  document.addEventListener('click', e => {
+    if(!e.target.closest('#txnFilterDd')){
+      dd.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
 
 /* ============================================================
    PAYMENTS — SUBSCRIBE MODAL
@@ -5394,7 +5483,6 @@ if (fapshi?.paymentUrl){
   db.pollTransactionStatus(txn.id).then(status => {
     txn.status = status;
     renderTransactions();
-    renderHistory();
   });
 }
 
@@ -5596,7 +5684,6 @@ document.getElementById('wdOverlay').addEventListener('click', function(e){
 });
 renderUniCards();
 renderConcourCards();
-renderHistory();
 renderTransactions();
 initFilterDropdowns();
 renderProfile();
@@ -5640,7 +5727,6 @@ function handlePaymentReturn(){
         'Your payment is still processing. Check the Payments page shortly for an update.';
     }
     renderTransactions();
-    renderHistory();
   }).catch(() => {
     document.getElementById('doneBtn').disabled = false;
     document.getElementById('successMsg').textContent =
