@@ -2892,7 +2892,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="5"/><circle cx="15" cy="15" r="5"/><line x1="9" y1="7" x2="9" y2="11"/><line x1="7" y1="9" x2="11" y2="9"/><line x1="13" y1="15" x2="17" y2="15"/></svg>
             </div>
             <div class="ref-stat-value" id="refEarningsValue">00<span class="ref-stat-unit">FCFA</span></div>
-            <div class="ref-stat-label">Earned (XAF)</div>
+            <div class="ref-stat-label">Balance (XAF)</div>
           </div>
         </div>
 
@@ -5522,7 +5522,7 @@ async function renderReferrals(){
   document.getElementById('refFriendsCount').textContent = String(count).padStart(2, '0');
   document.getElementById('refSubscribedCount').textContent = String(subscribed).padStart(2, '0');
   document.getElementById('refEarningsValue').innerHTML =
-    `${earnings.toLocaleString()}<span class="ref-stat-unit">FCFA</span>`;
+    `${available.toLocaleString()}<span class="ref-stat-unit">FCFA</span>`;
   document.getElementById('refRecentBadge').textContent = String(count).padStart(2, '0');
   document.getElementById('wdAvailableAmt').textContent = available.toLocaleString();
 
