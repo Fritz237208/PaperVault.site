@@ -3958,13 +3958,18 @@ const db = {
       profilesById = Object.fromEntries(refProfiles.map(p => [p.id, p]));
     }
 
-    // Total amount already paid out (successful withdrawals)
+    // Total amount already paid out OR reserved (pending admin approval).
+    // A withdrawal must be deducted from the available balance the moment
+    // it's requested — not just once an admin marks it 'successful' —
+    // otherwise the displayed balance snaps back to the pre-withdrawal
+    // amount the next time this function runs (e.g. navigating away and
+    // back), even though the request is still awaiting payout.
     const { data: paid, error: paidErr } = await supabase
       .from('payment_transactions')
       .select('amount')
       .eq('user_id', user.id)
       .eq('type', 'withdrawal')
-      .eq('status', 'successful');
+      .in('status', ['pending', 'successful']);
     if (paidErr) throw paidErr;
     const totalWithdrawn = paid.reduce((sum, r) => sum + r.amount, 0);
 
