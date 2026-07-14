@@ -3429,6 +3429,30 @@ const SUPABASE_ANON_KEY = 'sb_publishable_XPEr2Xz5yeB3DI3FX_KORQ_XiqzvH_o';
 var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* ============================================================
+   R2 STORAGE — get a short-lived download URL via the
+   r2-storage Edge Function (files now live in Cloudflare R2,
+   not Supabase Storage). Any signed-in user can request this;
+   the function itself only checks that a session exists.
+   ============================================================ */
+const R2_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/r2-storage`;
+
+async function getR2DownloadUrl(key){
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) throw new Error('Not signed in');
+  const res = await fetch(R2_FUNCTION_URL, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${session.access_token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ action: 'get-download-url', key }),
+  });
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.error || 'Could not get download URL');
+  return json.url;
+}
+
+/* ============================================================
    AUTH GUARD
    ------------------------------------------------------------
    This dashboard is only for signed-in users. Anyone who lands
@@ -4601,12 +4625,11 @@ async function viewPaperInner(id, type = 'university'){
   const hasAccess = await db.checkAccess(pq, type);
 
   if(hasAccess){
-    // Live: fetch a short-lived signed URL from Supabase Storage
-    const { data, error } = await supabase.storage
-      .from('past-questions')
-      .createSignedUrl(pq.file_path, 120); // 2-minute expiry
-
-    if(error || !data?.signedUrl){
+    // Live: fetch a short-lived signed URL for the file in R2, via the Edge Function
+    let signedUrl;
+    try {
+      signedUrl = await getR2DownloadUrl(pq.file_path);
+    } catch(error){
       console.error('Signed URL error:', error);
       alert('Unable to open this document right now. Please try again.');
       return;
@@ -4622,7 +4645,7 @@ async function viewPaperInner(id, type = 'university'){
       console.warn('Watermark profile fetch failed:', e);
     }
 
-    openPdfViewer(pq.title, data.signedUrl, watermarkText);
+    openPdfViewer(pq.title, signedUrl, watermarkText);
   } else {
     openAccessModal(pq, type);
   }
@@ -4643,10 +4666,10 @@ async function viewPaperInner(id, type = 'university'){
      page wrapper (user's referral code / email stamped diagonally).
    • Keyboard shortcuts: Escape closes, arrow keys page through.
 
-   Live integration (Supabase Storage):
-     1. Store PDFs in a private bucket — public access OFF.
-     2. In viewPaper() above, call createSignedUrl(path, 120) to get
-        a 2-minute URL, then pass it to openPdfViewer().
+   Live integration (Cloudflare R2 via Edge Function):
+     1. Files live in a private R2 bucket — no public access.
+     2. In viewPaper() above, getR2DownloadUrl(pq.file_path) calls the
+        r2-storage Edge Function, which returns a 1-hour signed URL.
      3. PDF.js fetches that URL internally — it never appears in <a>
         tags or window.location, so right-click → Save As is blocked
         at the source.
